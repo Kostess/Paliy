@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
     <meta charset="UTF-8">
-    {% block title -%}
+    {% block title %}
         {% if title %}
                  <title>БГИТУ - {{title}}</title>
         {% else %}
                  <title>БГИТУ</title>
         {% endif %}
     {% endblock %}
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    {% block content -%}
-        {%- block mainmenu -%}
-            <ul class="mainmenu">
-                {% for m in menu -%}
-                    <li><a href="{{m.url}}">{{m.name}}</a></li>
-                {% endfor -%}
-            </ul>
-        {% endblock mainmenu -%}
-    <div class="clear"></div>
-    <div class="content">
-        {% if title -%}
-            <h1>{{title}}</h1>
-        {% else -%}
-            <h1>Про Flask</h1>
-        {% endif -%}
+    <header class="py-5 bg-sky-900 text-slate-100 text-xl">
+        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">
+            <div class="flex justify-between">
+                <a href="/">Палий Константин</a>
+                <nav class="list-none flex gap-x-8">
+                    {% for m in menu -%}
+                        <li><a href="{{m.url}}" class="hover:text-sky-300">{{m.name}}</a></li>
+                    {% endfor -%}
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="mt-20">
+        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">
+            {% if title -%}
+                <h1 class="text-6xl font-bold">{{title}}</h1>
+            {% else -%}
+                <h1 class="text-5xl font-bold">Про Flask</h1>
+            {% endif -%}
 
-    {% endblock -%}
-    </div>
+            {% block content %}
 
+            {% endblock %}
+        </div>
+    </main>
+{#    <footer class="footer">#}
+{#        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">#}
+{#            <nav class="menu">#}
+{#                {% for m in menu -%}#}
+{#                    <li><a href="{{m.url}}">{{m.name}}</a></li>#}
+{#                {% endfor -%}#}
+{#            </nav>#}
+{#        </div>#}
+{#    </footer>#}
 </body>
 </html>

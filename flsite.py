@@ -15,7 +15,7 @@ loaded_model_knn = pickle.load(open('model/Iris_pickle_file', 'rb'))
 
 @app.route("/")
 def index():
-    return render_template('index.html', title="Лабораторные работы, выполненные Палий Константин Сергеевич", menu=menu)
+    return render_template('index.html', title="Лабораторные работы, по машинному обучению", menu=menu)
 
 
 @app.route("/p_knn", methods=['POST', 'GET'])
