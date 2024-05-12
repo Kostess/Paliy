@@ -2,5 +2,24 @@
  
 {% block content %}
 {{ super() }}
-<p>Линейная регрессия
+<p class="text-xl font-bold mt-5">Линейная модель</p>
+<form class="space-y-6 mt-5" action="/p_linear" method="POST">
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list1" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш рост"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list2" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш вес"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list3" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш пол"></p>
+    </div>
+    <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Узнать размер обуви
+    </button>
+</form>
+
+    <div>
+        {{ class_model }}
+    {{ pred }}
+    </div>
 {% endblock %}

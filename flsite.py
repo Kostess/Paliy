@@ -5,13 +5,14 @@ from flask import Flask, render_template, url_for, request
 
 app = Flask(__name__)
 
-menu = [{"name": "KNN", "url": "p_knn"},
+menu = [{"name": "Главная", "url": "/"},
+        {"name": "KNN", "url": "p_knn"},
         {"name": "Линейная", "url": "p_linear"},
         {"name": "Логистическая", "url": "p_logistic"},
         {"name": "Дерево", "url": "p_three"}]
 
 loaded_model_knn = pickle.load(open('model/Iris_pickle_file', 'rb'))
-
+loaded_model_linear = pickle.load(open('model/linearModel', 'rb'))
 
 @app.route("/")
 def index():
@@ -32,9 +33,16 @@ def f_knn():
                                class_model="Это: " + pred)
 
 
-@app.route("/p_linear")
+@app.route("/p_linear", methods=['POST', 'GET'])
 def f_linear():
-    return render_template('lab2.html', title="Линейная регрессия", menu=menu)
+    if request.method == 'GET':
+        return render_template('lab2.html', title="Линейная регрессия", menu=menu)
+    if request.method == 'POST':
+        X_new = np.array([[float(request.form['list1']),
+                           float(request.form['list2']),
+                           float(request.form['list3']),]])
+        pred = loaded_model_linear.predict(X_new)
+        return render_template('lab2.html', title="Линейная регрессия", menu=menu, class_model=f"Ваш размер обуви: {pred}")
 
 
 @app.route("/p_logistic")

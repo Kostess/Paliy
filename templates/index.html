@@ -2,5 +2,32 @@
  
 {% block content %}
 {{ super() }}
-<p>Содержимое главной страницы
+    <div class="container py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div>
+            <h1 class="text-center text-3xl font-extrabold text-gray-900">Машинное обучение</h1>
+            <p class="text-center text-xl text-gray-500 mt-1">Область компьютерных наук, которая использует статистические методы и алгоритмы для автоматического обучения и улучшения систем.</p>
+        </div>
+
+        <div class="mt-10">
+            <h2 class="text-center text-2xl font-bold text-gray-900">Модели машинного обучения</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+                <a href="/p_knn" class="p-8 bg-white rounded-lg shadow hover:shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    <h3 class="text-lg font-semibold text-gray-900">KNN (k-nearest neighbors)</h3>
+                    <p class="text-sm text-gray-500">Простая модель машинного обучения, основанная на принципе поиска k ближайших соседей.</p>
+                </a>
+                <a href="/p_linear" class="p-8 bg-white rounded-lg shadow hover:shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    <h3 class="text-lg font-semibold text-gray-900">Линейная регрессия</h3>
+                    <p class="text-sm text-gray-500">Модель, которая строит прямую линию, наилучшим образом аппроксимирующую набор точек данных.</p>
+                </a>
+                <a href="/p_logistic" class="p-8 bg-white rounded-lg shadow hover:shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    <h3 class="text-lg font-semibold text-gray-900">Логистическая регрессия</h3>
+                    <p class="text-sm text-gray-500">Статистический метод, который позволяет предсказать вероятность того, что событие произойдет.</p>
+                </a>
+                <a href="/p_three" class="p-8 bg-white rounded-lg shadow hover:shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                    <h3 class="text-lg font-semibold text-gray-900">Дерево решений</h3>
+                    <p class="text-sm text-gray-500">Модель машинного обучения, представляющая собой древовидную структуру, где каждый узел представляет собой тестовый вопрос.</p>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="h-full">
 <head>
     <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
     <meta charset="UTF-8">
@@ -12,21 +12,21 @@
     {% endblock %}
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="h-full flex flex-col">
     <header class="py-5 bg-sky-900 text-slate-100 text-xl">
-        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">
+        <div class="px-4 container mx-auto">
             <div class="flex justify-between">
                 <a href="/">Палий Константин</a>
                 <nav class="list-none flex gap-x-8">
-                    {% for m in menu -%}
+                    {% for m in menu %}
                         <li><a href="{{m.url}}" class="hover:text-sky-300">{{m.name}}</a></li>
-                    {% endfor -%}
+                    {% endfor %}
                 </nav>
             </div>
         </div>
     </header>
-    <main class="mt-20">
-        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">
+    <main class="py-20 bg-gray-50 h-full flex-1">
+        <div class="container mx-auto px-4">
             {% if title -%}
                 <h1 class="text-6xl font-bold">{{title}}</h1>
             {% else -%}
@@ -38,14 +38,14 @@
             {% endblock %}
         </div>
     </main>
-{#    <footer class="footer">#}
-{#        <div class="px-5 xl:max-w-screen-xl md:max-w-screen-md sm:max-w-screen-sm w-full my-0 mx-auto">#}
-{#            <nav class="menu">#}
-{#                {% for m in menu -%}#}
-{#                    <li><a href="{{m.url}}">{{m.name}}</a></li>#}
-{#                {% endfor -%}#}
-{#            </nav>#}
-{#        </div>#}
-{#    </footer>#}
+    <footer class="bg-gray-50 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="list-none flex gap-x-8 items-center justify-center">
+                {% for m in menu %}
+                    <li><a href="{{m.url}}" class="text-slate-900 hover:text-slate-500">{{m.name}}</a></li>
+                {% endfor %}
+            </nav>
+        </div>
+    </footer>
 </body>
 </html>
