@@ -18,21 +18,28 @@ loaded_model_tree = pickle.load((open('model/Tree_model', 'rb')))
 
 @app.route("/")
 def index():
-    return render_template('index.html', title="Лабораторные работы, по машинному обучению", menu=menu)
+    return render_template('index.html',
+                           title="Лабораторные работы, по машинному обучению",
+                           menu=menu)
 
 
 @app.route("/p_knn", methods=['POST', 'GET'])
 def f_knn():
     if request.method == 'GET':
-        return render_template('lab1.html', title="Метод k -ближайших соседей (KNN)", menu=menu, class_model='')
+        return render_template('lab1.html',
+                               title="Метод k -ближайших соседей (KNN)",
+                               menu=menu,
+                               class_model='')
     if request.method == 'POST':
         x_new = np.array([[float(request.form['list1']),
                            float(request.form['list2']),
                            float(request.form['list3']),
                            float(request.form['list4'])]])
         pred = loaded_model_knn.predict(x_new)
-        return render_template('lab1.html', title="Метод k -ближайших соседей (KNN)", menu=menu,
-                               class_model="Это: " + pred)
+        return render_template('lab1.html',
+                               title="Метод k -ближайших соседей (KNN)",
+                               menu=menu,
+                               class_model="Это: " + pred[0])
 
 
 @app.route("/p_linear", methods=['POST', 'GET'])
@@ -44,7 +51,10 @@ def f_linear():
                            float(request.form['list2']),
                            float(request.form['list3']),]])
         pred = loaded_model_linear.predict(x_new)
-        return render_template('lab2.html', title="Линейная регрессия", menu=menu, class_model=f"Ваш размер обуви: {pred}")
+        return render_template('lab2.html',
+                               title="Линейная регрессия",
+                               menu=menu,
+                               class_model=f"Ваш размер обуви: {pred[0]}")
 
 
 @app.route("/p_logistic", methods=['POST', 'GET'])
@@ -60,8 +70,10 @@ def f_logistic():
                            float(request.form['list6']),
                            float(request.form['list7']),]])
         pred = loaded_model_logistic.predict(x_new)
-        return render_template('lab3.html', title="Логистическая регрессия", menu=menu,
-                               class_model=f"Это: {pred}")
+        return render_template('lab3.html',
+                               title="Логистическая регрессия",
+                               menu=menu,
+                               class_model=f"Это: {pred[0]}")
 
 @app.route("/p_three", methods=['POST', 'GET'])
 def f_three():
@@ -76,7 +88,10 @@ def f_three():
                            float(request.form['list6']),
                            float(request.form['list7']), ]])
         pred = loaded_model_tree.predict(x_new)
-        return render_template('three.html', title="Дерево решений", menu=menu, class_model=f"Это: {pred}")
+        return render_template('three.html',
+                               title="Дерево решений",
+                               menu=menu,
+                               class_model=f"Это: {pred[0]}")
 
 if __name__ == "__main__":
     app.run(debug=True)

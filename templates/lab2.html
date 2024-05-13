@@ -18,8 +18,17 @@
     </button>
 </form>
 
-    <div>
+    <div class="mt-2 font-bold text-3xl">
         {{ class_model }}
-    {{ pred }}
+        {{ pred }}
+    </div>
+
+    <div class="mt-2">
+        <h2 class="font-bold text-3xl mb-1 text-center">
+            Метрика
+        </h2>
+        <p class="text-xl">
+            MSE - {{ mean_squared }}
+        </p>
     </div>
 {% endblock %}
