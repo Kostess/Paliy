@@ -2,5 +2,36 @@
  
 {% block content %}
 {{ super() }}
-<p>Логистическая регрессия для классификации Ирисов
+    <p class="text-xl font-bold mt-5">Логистическая регрессия</p>
+    <form class="space-y-6 mt-5" action="/p_logistic" method="POST">
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list1" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Площадь"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list2" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Максимальная длина оси"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list3" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Минимальная длина оси"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list4" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Эксцентриситет"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list5" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Выпуклая область"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list6" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Extent"></p>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <p><input type="text" name="list7" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Периметр"></p>
+    </div>
+    <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Узнать сорт
+    </button>
+</form>
+
+<div>
+        {{ class_model }}
+    {{ pred }}
+    </div>
 {% endblock %}

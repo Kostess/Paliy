@@ -13,6 +13,8 @@ menu = [{"name": "Главная", "url": "/"},
 
 loaded_model_knn = pickle.load(open('model/Iris_pickle_file', 'rb'))
 loaded_model_linear = pickle.load(open('model/linearModel', 'rb'))
+loaded_model_logistic = pickle.load(open('model/logistic_model', 'rb'))
+loaded_model_tree = pickle.load((open('model/Tree_model', 'rb')))
 
 @app.route("/")
 def index():
@@ -24,11 +26,11 @@ def f_knn():
     if request.method == 'GET':
         return render_template('lab1.html', title="Метод k -ближайших соседей (KNN)", menu=menu, class_model='')
     if request.method == 'POST':
-        X_new = np.array([[float(request.form['list1']),
+        x_new = np.array([[float(request.form['list1']),
                            float(request.form['list2']),
                            float(request.form['list3']),
                            float(request.form['list4'])]])
-        pred = loaded_model_knn.predict(X_new)
+        pred = loaded_model_knn.predict(x_new)
         return render_template('lab1.html', title="Метод k -ближайших соседей (KNN)", menu=menu,
                                class_model="Это: " + pred)
 
@@ -38,22 +40,43 @@ def f_linear():
     if request.method == 'GET':
         return render_template('lab2.html', title="Линейная регрессия", menu=menu)
     if request.method == 'POST':
-        X_new = np.array([[float(request.form['list1']),
+        x_new = np.array([[float(request.form['list1']),
                            float(request.form['list2']),
                            float(request.form['list3']),]])
-        pred = loaded_model_linear.predict(X_new)
+        pred = loaded_model_linear.predict(x_new)
         return render_template('lab2.html', title="Линейная регрессия", menu=menu, class_model=f"Ваш размер обуви: {pred}")
 
 
-@app.route("/p_logistic")
+@app.route("/p_logistic", methods=['POST', 'GET'])
 def f_logistic():
-    return render_template('lab3.html', title="Логистическая регрессия", menu=menu)
+    if request.method == 'GET':
+        return render_template('lab3.html', title="Логистическая регрессия", menu=menu)
+    if request.method == 'POST':
+        x_new = np.array([[float(request.form['list1']),
+                           float(request.form['list2']),
+                           float(request.form['list3']),
+                           float(request.form['list4']),
+                           float(request.form['list5']),
+                           float(request.form['list6']),
+                           float(request.form['list7']),]])
+        pred = loaded_model_logistic.predict(x_new)
+        return render_template('lab3.html', title="Логистическая регрессия", menu=menu,
+                               class_model=f"Это: {pred}")
 
-
-@app.route("/p_three")
+@app.route("/p_three", methods=['POST', 'GET'])
 def f_three():
-    return render_template('three.html', title="Дерево решений", menu=menu)
-
+    if request.method == 'GET':
+        return render_template('three.html', title="Дерево решений", menu=menu)
+    if request.method == 'POST':
+        x_new = np.array([[float(request.form['list1']),
+                           float(request.form['list2']),
+                           float(request.form['list3']),
+                           float(request.form['list4']),
+                           float(request.form['list5']),
+                           float(request.form['list6']),
+                           float(request.form['list7']), ]])
+        pred = loaded_model_tree.predict(x_new)
+        return render_template('three.html', title="Дерево решений", menu=menu, class_model=f"Это: {pred}")
 
 if __name__ == "__main__":
     app.run(debug=True)
