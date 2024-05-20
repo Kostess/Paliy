@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-4">Описание API</h2>
+    <p class="mb-4">API предоставляет возможность прогнозирования значения на основе входных данных, таких как рост, вес и пол человека. Результат прогноза возвращается в формате JSON.</p>
+
+    <h2 class="text-2xl font-bold mb-4">Маршрут API</h2>
+    <p class="mb-2">URL: <code class="bg-gray-200 p-1 font-mono">http://localhost:5000/api_linear</code></p>
+    <p class="mb-4">Метод: <code class="bg-gray-200 p-1 font-mono">GET</code></p>
+
+    <h2 class="text-2xl font-bold mb-4">Параметры запроса</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li><code>height</code> (float): Рост человека в метрах.</li>
+        <li><code>weight</code> (float): Вес человека в килограммах.</li>
+        <li><code>gender</code> (string): Пол человека. Принимает значения: 'м' (мужской) или 'ж' (женский).</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold mb-4">Пример использования API</h2>
+    <p class="mb-2">Ввод данных пользователем:</p>
+    <pre class="bg-gray-200 p-4 mb-4"><code>
+height = input('Введите рост = ')
+weight = input('Введите вес = ')
+gender = input('Введите пол = ')
+if gender == 'м':
+    gender = 1
+else:
+    gender = 0
+    </code></pre>
+
+    <p class="mb-2">Отправка запроса к API:</p>
+    <pre class="bg-gray-200 p-4 mb-4"><code>
+response = get('http://localhost:5000/api_linear',
+               json={'height': height,
+                     'weight': weight,
+                     'gender': gender})
+    </code></pre>
+
+    <p class="mb-2">Обработка ответа:</p>
+    <pre class="bg-gray-200 p-4 mb-4"><code>
+result = response.json()
+print(result)
+    </code></pre>
+
+    <h2 class="text-2xl font-bold mb-4">Возвращаемые данные</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li><code>result</code> (float): Прогнозируемое значение, полученное с помощью линейной модели.</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold mb-4">Примечания</h2>
+    <ul class="list-disc pl-6">
+        <li>Убедитесь, что API и сервер, на котором он развернут, запущены и доступны по указанному URL.</li>
+        <li>Входные данные должны быть корректными числами для роста и веса, а пол должен быть указан в виде строки 'м' или 'ж'.</li>
+        <li>Проверьте, что модель, используемая для прогнозирования (loaded_model_linear), была загружена и настроена правильно.</li>
+        <li>Если входные данные некорректны или отсутствуют, API может вернуть ошибку.</li>
+        <li>Убедитесь, что сервер и API работают корректно, иначе запрос может завершиться ошибкой.</li>
+    </ul>
+</div>
+{% endblock %}

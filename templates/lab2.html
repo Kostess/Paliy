@@ -2,16 +2,26 @@
  
 {% block content %}
 {{ super() }}
-<p class="text-xl font-bold mt-5">Линейная модель</p>
+    <p class="text-xl font-bold mt-5">Укажите всё в числах</p>
 <form class="space-y-6 mt-5" action="/p_linear" method="POST">
     <div class="w-full max-w-xl mb-6">
-        <p><input type="text" name="list1" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш рост"></p>
+        <input type="text" name="list1" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш рост">
     </div>
     <div class="w-full max-w-xl mb-6">
-        <p><input type="text" name="list2" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш вес"></p>
+        <input type="text" name="list2" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш вес">
     </div>
     <div class="w-full max-w-xl mb-6">
-        <p><input type="text" name="list3" class="appearance-none block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500" placeholder="Ваш пол"></p>
+        <p class="text-gray-700">Ваш пол:</p>
+        <div class="flex space-x-4">
+            <div class="flex items-center">
+                <input id="male" type="radio" name="list3" value="1" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                <label for="male" class="ml-2 block text-sm leading-5 text-gray-900">Мужчина</label>
+            </div>
+            <div class="flex items-center">
+                <input id="female" type="radio" name="list3" value="0" class="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                <label for="female" class="ml-2 block text-sm leading-5 text-gray-900">Женщина</label>
+            </div>
+        </div>
     </div>
     <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         Узнать размер обуви

@@ -9,7 +9,8 @@ menu = [{"name": "Главная", "url": "/"},
         {"name": "KNN", "url": "p_knn"},
         {"name": "Линейная", "url": "p_linear"},
         {"name": "Логистическая", "url": "p_logistic"},
-        {"name": "Дерево", "url": "p_three"}]
+        {"name": "Дерево", "url": "p_three"},
+        {"name": "Документация по API", "url": "doc_api"},]
 
 metrics_linear_data = [
     {"name": "MSE", "value": "1.3509243001909827e-29"},
@@ -150,45 +151,20 @@ def get_sort():
     return jsonify(sort=pred[0])
 
 
-@app.route('/api_linear', methods=['get'])
+@app.route('/api_linear', methods=['GET'])
 def get_linear():
     request_data = request.get_json()
     x_new = np.array([[float(request_data['height']),
                        float(request_data['weight']),
-                       float(request_data['sex'])]])
-    pred = loaded_model_knn.predict(x_new)
+                       float(request_data['gender'])]])
+    pred = loaded_model_linear.predict(x_new)
 
-    return jsonify(sort=pred[0])
-
-
-@app.route('/api_logistic', methods=['GET'])
-def get_logistic():
-    request_data = request.get_json()
-    x_new = np.array([[float(request_data['area']),
-                       float(request_data['majorAxisLength']),
-                       float(request_data['minorAxisLength']),
-                       float(request_data['eccentricity']),
-                       float(request_data['convexArea']),
-                       float(request_data['extent']),
-                       float(request_data['perimeter']), ]])
-    pred = loaded_model_logistic.predict(x_new)
-
-    return jsonify(sort=pred[0])
+    return jsonify(result=pred[0])
 
 
-@app.route('/api_tree', methods=['GET'])
-def get_tree():
-    request_data = request.get_json()
-    x_new = np.array([[float(request_data['size']),
-                       float(request_data['weight']),
-                       float(request_data['sweetness']),
-                       float(request_data['eccentricity']),
-                       float(request_data['convexArea']),
-                       float(request_data['extent']),
-                       float(request_data['perimeter']), ]])
-    pred = loaded_model_logistic.predict(x_new)
-
-    return jsonify(sort=pred[0])
+@app.route('/doc_api')
+def doc_api():
+    return render_template('documentAPI.html', title="Документация по API", menu=menu)
 
 
 if __name__ == "__main__":
