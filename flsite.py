@@ -22,7 +22,7 @@ metrics_linear_data = [
     {"name": "RMSLE", "value": "2.9624445261614147e-15"},
     {"name": "R-квадрат", "value": "1.0"},
     {"name": "Скорректированный R-квадрат", "value": "0.7986743400332134"},
-                ]
+    ]
 
 metrics_classification_data = [
     {"name": "Confusion matrix", "type": "logistic", "value": {"Predicted": [73, 15], "Actual": [10, 82]}},
