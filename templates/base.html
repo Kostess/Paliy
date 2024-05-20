@@ -12,7 +12,7 @@
     {% endblock %}
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full flex flex-col">
+<body class="h-full flex flex-col bg-gray-50">
     <header class="py-5 bg-sky-900 text-slate-100 text-xl">
         <div class="px-4 container mx-auto">
             <div class="flex justify-between">
@@ -38,8 +38,8 @@
             {% endblock %}
         </div>
     </main>
-    <footer class="bg-gray-50 py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer class="py-10 mt-40">
+        <div class="container mx-auto px-4">
             <nav class="list-none flex gap-x-8 items-center justify-center">
                 {% for m in menu %}
                     <li><a href="{{m.url}}" class="text-slate-900 hover:text-slate-500">{{m.name}}</a></li>

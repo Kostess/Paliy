@@ -32,6 +32,27 @@
 
 <div>
         {{ class_model }}
-    {{ pred }}
+    </div>
+    <div class="mt-12">
+        <h2 class="font-bold text-3xl mb-1 text-center">
+            Метрика
+        </h2>
+        <ol class="mt-5">
+            {% for metric in metrics[:3] %}
+                {% if metric.type == "three" %}
+            <li>
+                <b>{{ metric.name }}: </b>Predicted: {{ metric.value.Predicted}} <br>
+                                            Actual: {{ metric.value.Actual }}
+            </li>
+                {% endif %}
+            {% endfor %}
+            {% for metric in metrics[3:] %}
+                {% if metric.type == "three" %}
+            <li>
+                <b>{{ metric.name }}: </b> {{ metric.value }}
+            </li>
+                {% endif %}
+            {% endfor %}
+        </ol>
     </div>
 {% endblock %}
