@@ -1,5 +1,5 @@
 import pickle
-
+from model.Neuro import SingleNeuron
 import numpy as np
 from flask import Flask, render_template, url_for, request, jsonify
 
@@ -10,7 +10,8 @@ menu = [{"name": "Главная", "url": "/"},
         {"name": "Линейная", "url": "p_linear"},
         {"name": "Логистическая", "url": "p_logistic"},
         {"name": "Дерево", "url": "p_three"},
-        {"name": "Документация по API", "url": "doc_api"},]
+        {"name": "Нейрон", "url": "p_neuro"},
+        {"name": "Документация по API", "url": "doc_api"}, ]
 
 metrics_linear_data = [
     {"name": "MSE", "value": "1.3509243001909827e-29"},
@@ -23,7 +24,7 @@ metrics_linear_data = [
     {"name": "RMSLE", "value": "2.9624445261614147e-15"},
     {"name": "R-квадрат", "value": "1.0"},
     {"name": "Скорректированный R-квадрат", "value": "0.7986743400332134"},
-    ]
+]
 
 metrics_classification_data = [
     {"name": "Confusion matrix", "type": "logistic", "value": {"Predicted": [73, 15], "Actual": [10, 82]}},
@@ -44,6 +45,9 @@ loaded_model_knn = pickle.load(open('model/Iris_pickle_file', 'rb'))
 loaded_model_linear = pickle.load(open('model/linearModel', 'rb'))
 loaded_model_logistic = pickle.load(open('model/logistic_model', 'rb'))
 loaded_model_tree = pickle.load((open('model/Tree_model', 'rb')))
+
+new_neuron = SingleNeuron(input_size=3)
+new_neuron.load_weights('model/neuron_weights.txt')
 
 
 @app.route("/")
@@ -84,7 +88,7 @@ def f_linear():
     if request.method == 'POST':
         x_new = np.array([[float(request.form['list1']),
                            float(request.form['list2']),
-                           float(request.form['list3']),]])
+                           float(request.form['list3']), ]])
         pred = loaded_model_linear.predict(x_new)
         return render_template('lab2.html',
                                title="Линейная регрессия",
@@ -137,6 +141,20 @@ def f_three():
                                menu=menu,
                                class_model=f"Это: {pred[0]}",
                                metrics=metrics_classification_data)
+
+
+@app.route("/p_neuro", methods=['GET', 'POST'])
+def neuro():
+    if request.method == 'GET':
+        return render_template('neuro.html', title="Нейрон", menu=menu)
+    if request.method == 'POST':
+        x_new = np.array([[float(request.form['list1']),
+                           float(request.form['list2']),
+                           float(request.form['list3']),]])
+        predictions = new_neuron.forward(x_new)
+        print("Предсказанные значения:", predictions, *np.where(predictions >= 0.5, 'Муж', 'Жен'))
+        return render_template('neuro.html', title="Первый нейрон", menu=menu,
+                               class_model="Это: " + str(*np.where(predictions >= 0.5, 'Муж', 'Жен')))
 
 
 @app.route('/api_sort', methods=['GET'])
