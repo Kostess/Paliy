@@ -7,7 +7,11 @@ if gender == 'м':
     gender = 1
 else:
     gender = 0
-print(get('http://localhost:5000/api_linear',
-          json={'height': height,
-                'weight': weight,
-                'gender': gender}).json())
+
+response = get('http://localhost:5000/api_linear',
+               json={'height': height,
+                     'weight': weight,
+                     'gender': gender})
+
+result = response.json()
+print(result)
