@@ -1,7 +1,12 @@
 import pickle
+import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
+
 from model.Neuro import SingleNeuron
 import numpy as np
 from flask import Flask, render_template, url_for, request, jsonify
+
+from model.tf_reg_neuro import model_reg_neuro
 
 app = Flask(__name__)
 
@@ -49,6 +54,7 @@ loaded_model_tree = pickle.load((open('model/Tree_model', 'rb')))
 new_neuron = SingleNeuron(input_size=3)
 new_neuron.load_weights('model/neuron_weights.txt')
 
+model_reg = tf.keras.models.load_model('model/regression_model.h5')
 
 @app.route("/")
 def index():
@@ -143,18 +149,22 @@ def f_three():
                                metrics=metrics_classification_data)
 
 
+scaler = StandardScaler()
+
+
 @app.route("/p_neuro", methods=['GET', 'POST'])
 def neuro():
     if request.method == 'GET':
-        return render_template('neuro.html', title="Нейрон", menu=menu)
+        return render_template('neuro.html', title="Первый нейрон", menu=menu)
     if request.method == 'POST':
         x_new = np.array([[float(request.form['list1']),
                            float(request.form['list2']),
-                           float(request.form['list3']),]])
-        predictions = new_neuron.forward(x_new)
-        print("Предсказанные значения:", predictions, *np.where(predictions >= 0.5, 'Муж', 'Жен'))
+                           float(request.form['list3']), ]])
+        x_scaler = scaler.fit_transform(x_new)
+        predictions = new_neuron.forward(x_scaler)
+        print("Предсказанные значения:", *predictions, *np.where(predictions >= 0.5, 'Собака', 'Кошка'))
         return render_template('neuro.html', title="Первый нейрон", menu=menu,
-                               class_model="Это: " + str(*np.where(predictions >= 0.5, 'Муж', 'Жен')))
+                               class_model="Это: " + str(*np.where(predictions >= 0.5, 'Собака', 'Кошка')))
 
 
 @app.route('/api_sort', methods=['GET'])
@@ -179,6 +189,27 @@ def get_linear():
 
     return jsonify(result=pred[0])
 
+
+@app.route('/reg_neuro')
+def reg_neuro():
+    input_data = np.array([[float(request.form['number_square']),
+                            float(request.form['number_rooms']),
+                            float(request.form['number_floors'])]])
+
+    predictions = model_reg_neuro.predict(input_data)
+
+    return jsonify(price=str(predictions))
+
+@app.route('/api_reg', methods=['get'])
+def predict_regression():
+    # Получение данных из запроса
+    input_data = np.array([[float(request.args.get('number_square')),
+                            float(request.args.get('number_rooms')),
+                            float(request.args.get('number_floors'))]])
+    # Предсказание
+    predictions = model_reg.predict(input_data)
+
+    return jsonify(price=str(predictions[0][0]))
 
 @app.route('/doc_api')
 def doc_api():

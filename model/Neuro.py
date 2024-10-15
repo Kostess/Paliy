@@ -1,12 +1,15 @@
 import numpy as np
 
+
 # Функция активации sigmoid
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+
 # Производная sigmoid
 def sigmoid_derivative(x):
     return x * (1 - x)
+
 
 # Нейрон
 class SingleNeuron:
@@ -35,7 +38,7 @@ class SingleNeuron:
 
     def train(self, X, y, epochs=1000, learning_rate=0.01):
         for _ in range(epochs):
-            self.forward(X)   # Прямое распространение
+            self.forward(X)  # Прямое распространение
             self.backward(y, learning_rate)  # Обратное распространение
 
     def save_weights(self, filename):
