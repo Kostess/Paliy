@@ -15,11 +15,11 @@
 </head>
 
 <body class="bg-gray-50">
-    <header class="py-5 bg-sky-900 text-slate-100 text-xl">
+    <header class="py-5 bg-sky-900 text-slate-100">
         <div class="px-4 container mx-auto">
-            <div class="flex justify-between">
+            <div class="flex justify-between text-xl">
                 <a href="/">Палий Константин</a>
-                <nav class="list-none flex gap-x-8">
+                <nav class="list-none flex lg:gap-x-8 gap-x-5 lg:text-base text-sm">
                     {% for m in menu %}
                         <li><a href="{{m.url}}" class="hover:text-sky-300">{{m.name}}</a></li>
                     {% endfor %}
