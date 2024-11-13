@@ -6,9 +6,9 @@ from flask import render_template, Blueprint, request, redirect, url_for
 from sklearn.preprocessing import StandardScaler
 from werkzeug.utils import secure_filename
 
-from data import menu, metrics_classification_data, metrics_linear_data
+from data import menu, metrics_classification_data, metrics_linear_data, food_names
 from models import loaded_model_knn, loaded_model_linear, loaded_model_logistic, loaded_model_tree, new_neuron, \
-    model_fashion
+    model_fashion, model_food
 
 scaler = StandardScaler()
 
@@ -96,7 +96,36 @@ def f_fashion():
             class_label = np.argmax(pred, axis=1)
             class_names = ['Футболка/топ', 'Брюки', 'Свитер', 'Платье', 'Пальто', 'Сандали', 'Рубашка', 'Кроссовки', 'Сумка', 'Ботинки']
             return render_template('neuro_fashion.html', title="Распознавание одежды", menu=menu, class_model=f"Это: {class_names[class_label[0]]}")
-    return redirect(url_for('routes.f_fashion'))
+    return redirect(url_for('routes.p_fashion'))
+
+
+@app.route("/p_food", methods=['POST', 'GET'])
+def f_fashion():
+    if request.method == 'GET':
+        return render_template('neuro_food.html', title="Распознавание еды", menu=menu)
+
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            return redirect(request.url)
+
+        file = request.files['image']
+        if file.filename == '':
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join('uploads', filename)
+            file.save(file_path)
+
+            img = Image.open(file_path).convert('L')
+            img = img.resize((180, 180))
+            img_array = np.array(img) / 255.0
+            img_array = img_array.reshape(1, 180, 180, 1)
+
+            pred = model_food.predict(img_array)
+            class_label = np.argmax(pred, axis=1)
+            return render_template('neuro_food.html', title="Распознавание еды", menu=menu, class_model=f"Это: {food_names[class_label[0]]}")
+    return redirect(url_for('routes.p_food'))
 
 @app.route('/doc_api')
 def doc_api():

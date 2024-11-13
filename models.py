@@ -12,3 +12,4 @@ new_neuron.load_weights('model/neuron_weights.txt')
 
 model_reg = tf.keras.models.load_model('model/regression_model.h5')
 model_fashion = tf.keras.models.load_model('model/fashion_mnist_model.h5')
+model_food = tf.keras.models.load_model('model/food_1_model.keras')
