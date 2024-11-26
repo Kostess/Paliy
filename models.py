@@ -1,5 +1,6 @@
 import pickle
 import tensorflow as tf
+import torch
 from model.Neuro import SingleNeuron
 
 loaded_model_knn = pickle.load(open('model/Iris_pickle_file', 'rb'))
@@ -15,3 +16,4 @@ model_reg = tf.keras.models.load_model('model/regression_model.h5')
 model_fashion = tf.keras.models.load_model('model/fashion_mnist_model.h5')
 model_food = tf.keras.models.load_model('model/food_3_model.keras')
 model_pc = tf.keras.models.load_model('model/pc.keras')
+model_detection = torch.hub.load("ultralytics/yolov5", "yolov5s")

@@ -1,6 +1,7 @@
 import os
 import tensorflow as tf
 import numpy as np
+import cv2
 from PIL import Image
 from flask import render_template, Blueprint, request, redirect, url_for, current_app
 from sklearn.preprocessing import StandardScaler
@@ -8,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from data import menu, metrics_classification_data, metrics_linear_data, food_names, pc_names
 from models import loaded_model_knn, loaded_model_linear, loaded_model_logistic, loaded_model_tree, new_neuron, \
-    model_fashion, model_food, model_pc
+    model_fashion, model_food, model_pc, model_detection
 
 scaler = StandardScaler()
 
@@ -117,6 +118,47 @@ def f_pc():
                                        class_model="Ошибка: " + str(e))
 
     return redirect(url_for('routes.p_pc'))
+
+@routes_app.route("/p_detection", methods=['POST', 'GET'])
+def p_detection():
+    if request.method == 'GET':
+        return render_template('detection.html', title="Детекция объектов", menu=menu)
+
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            return redirect(request.url)
+
+        file = request.files['image']
+        if file.filename == '':
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+
+            try:
+                img = cv2.imread(file_path)
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+                results = model_detection(img)
+                detections = results.pandas().xyxy[0]
+
+                detected_objects = []
+                for _, row in detections.iterrows():
+                    detected_objects.append({
+                        'class': row['name'],
+                        'confidence': f"{row['confidence']:.2f}",
+                        'bbox': [int(row['xmin']), int(row['ymin']), int(row['xmax']), int(row['ymax'])]
+                    })
+
+                return render_template('pc.html', title="Детекция объектов", menu=menu, class_model="",
+                                       detections=detected_objects, error=None)
+            except Exception as e:
+                return render_template('pc.html', title="Детекция объектов", menu=menu, class_model="", detections=None,
+                                       error="Ошибка: " + str(e))
+
+    return redirect(url_for('f_detection'))
 
 
 @routes_app.route('/doc_api')
