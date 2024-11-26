@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from werkzeug.utils import secure_filename
 
 from data import menu, metrics_classification_data, metrics_linear_data, food_names, pc_names
-from models import loaded_model_knn, loaded_model_linear, loaded_model_logistic, loaded_model_tree, new_neuron, \
+from my_models import loaded_model_knn, loaded_model_linear, loaded_model_logistic, loaded_model_tree, new_neuron, \
     model_fashion, model_food, model_pc, model_detection
 
 scaler = StandardScaler()
@@ -119,6 +119,7 @@ def f_pc():
 
     return redirect(url_for('routes.p_pc'))
 
+
 @routes_app.route("/p_detection", methods=['POST', 'GET'])
 def p_detection():
     if request.method == 'GET':
@@ -144,21 +145,27 @@ def p_detection():
                 results = model_detection(img)
                 detections = results.pandas().xyxy[0]
 
-                detected_objects = []
+                # Наложение рамок и меток на изображение
                 for _, row in detections.iterrows():
-                    detected_objects.append({
-                        'class': row['name'],
-                        'confidence': f"{row['confidence']:.2f}",
-                        'bbox': [int(row['xmin']), int(row['ymin']), int(row['xmax']), int(row['ymax'])]
-                    })
+                    label = f"{row['name']} {row['confidence']:.2f}"
+                    cv2.rectangle(img, (int(row['xmin']), int(row['ymin'])), (int(row['xmax']), int(row['ymax'])), (255, 0, 0), 2)
+                    cv2.putText(img, label, (int(row['xmin']), int(row['ymin']) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)
 
-                return render_template('pc.html', title="Детекция объектов", menu=menu, class_model="",
-                                       detections=detected_objects, error=None)
+                # Сохранение обработанного изображения
+                processed_filename = f"processed_{filename}"
+                processed_image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], processed_filename)
+                cv2.imwrite(processed_image_path, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+
+                # Передача относительного пути к изображению в шаблон
+                processed_image_url = url_for('static', filename=f'uploads/{processed_filename}')
+                print(processed_image_url)
+                return render_template('detection.html', title="Детекция объектов", menu=menu, class_model="",
+                                       processed_image_url=processed_image_url, error=None)
             except Exception as e:
-                return render_template('pc.html', title="Детекция объектов", menu=menu, class_model="", detections=None,
+                return render_template('detection.html', title="Детекция объектов", menu=menu, class_model="", detections=None,
                                        error="Ошибка: " + str(e))
 
-    return redirect(url_for('f_detection'))
+    return redirect(url_for('p_detection'))
 
 
 @routes_app.route('/doc_api')

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import loaded_model_knn, loaded_model_linear, model_reg
+from my_models import loaded_model_knn, loaded_model_linear, model_reg
 import numpy as np
 
 api_app = Blueprint('api', __name__)

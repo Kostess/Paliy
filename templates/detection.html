@@ -23,17 +23,11 @@
         {{ class_model }}
     </div>
 
-    {% if detections %}
+    {% if processed_image_url %}
         <h2 class="text-xl font-bold mt-5">Результаты детекции:</h2>
-        <ul class="list-disc list-inside">
-            {% for detection in detections %}
-                <li>
-                    Класс: {{ detection.class }}<br>
-                    Уверенность: {{ detection.confidence }}<br>
-                    Координаты: {{ detection.bbox }}
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="max-w-xl w-full h-full">
+            <img src="{{ processed_image_url }}" alt="Processed Image" class="w-full h-auto border border-gray-300 rounded-md" />
+        </div>
     {% endif %}
 
     {% if error %}

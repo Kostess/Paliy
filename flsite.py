@@ -2,11 +2,12 @@ from flask import Flask
 from routes import routes_app
 from api import api_app
 
+
 def create_app():
     app = Flask(__name__)
 
     # Настройки для загрузки файлов
-    UPLOAD_FOLDER = 'uploads'
+    UPLOAD_FOLDER = 'static/uploads'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
@@ -21,6 +22,7 @@ def create_app():
     app.register_blueprint(api_app, url_prefix='/api')
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()

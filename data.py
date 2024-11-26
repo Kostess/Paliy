@@ -9,6 +9,7 @@ menu = [
     {"name": "Распознавание одежды", "url": "p_fashion"},
     {"name": "Распознавание еды", "url": "p_food"},
     {"name": "Распознавание частей ПК", "url": "p_pc"},
+    {"name": "Детектирование", "url": "p_detection"},
 ]
 
 metrics_linear_data = [
