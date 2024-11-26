@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+    <p class="text-xl font-bold mt-5">Загрузите картинку</p>
+<form class="space-y-6 mt-5" action="/p_pc" method="POST" enctype="multipart/form-data">
+    <div class="w-full max-w-xl mb-6">
+        <div class="relative">
+            <input type="file" name="image" id="fileInput" class="absolute inset-0 opacity-0 cursor-pointer" accept="image/*">
+            <label for="fileInput" class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-indigo-500 cursor-pointer">
+                Выберите файл
+            </label>
+        </div>
+    </div>
+    <div class="w-full max-w-xl mb-6">
+        <img id="previewImage" src="#" alt="Preview" class="hidden w-full h-auto border border-gray-300 rounded-md" />
+    </div>
+    <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Узнать что за комплектующее
+    </button>
+</form>
+    <div class="mt-2 font-bold text-3xl">
+        {{ class_model }}
+    </div>
+{% endblock %}

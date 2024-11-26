@@ -5,9 +5,10 @@ menu = [
     {"name": "Логистическая", "url": "p_logistic"},
     {"name": "Дерево", "url": "p_three"},
     {"name": "Нейрон", "url": "p_neuro"},
+    {"name": "Документация по API", "url": "doc_api"},
     {"name": "Распознавание одежды", "url": "p_fashion"},
     {"name": "Распознавание еды", "url": "p_food"},
-    {"name": "Документация по API", "url": "doc_api"},
+    {"name": "Распознавание частей ПК", "url": "p_pc"},
 ]
 
 metrics_linear_data = [
@@ -139,4 +140,21 @@ food_names = [
     "french fries",
     "mixed rice",
     "goya chanpuru"
+]
+
+pc_names = [
+    "cables",
+    "case",
+    "cpu",
+    "gpu",
+    "hdd",
+    "headset",
+    "keyboard",
+    "microphone",
+    "monitor",
+    "motherboard",
+    "mouse",
+    "ram",
+    "speakers",
+    "webcam"
 ]
